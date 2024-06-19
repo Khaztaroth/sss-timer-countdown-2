@@ -4,27 +4,18 @@ import { customElement } from "lit/decorators.js";
 import { DateTime, Duration } from 'luxon'
 import { getCurrentTime } from "./timing/timer";
 import { useFormatter } from "./timing/formatter";
+import { StreamData, Stream, Days } from "./timing/types";
 
-import './assets/blocks/live'
-import './assets/blocks/timer'
+import './assets/blocks/liveDisplay'
+import './assets/blocks/timerDisplay'
+import './assets/blocks/vacationDisplay'
 
-const days = {
-    wed: true,
-    sun: true,
-    nextWed: true,
-}
-
-export type StreamInfo = {
-    day: string,
-    time: Duration,
-    date: DateTime,
-}
-
-export type Stream = {
-    day: string,
-    time: string,
-    date: string,
-    isLive: boolean,
+const days: Days = {
+    "wed":false,
+    "sun":false,
+    "nextWed":false,
+    "special":"2024-06-08T21:00:00.000-04:00",
+    "vacation":"2024-06-30"
 }
 
 @customElement('timer-viewer')
@@ -32,7 +23,7 @@ export class TimerViewer extends LitElement {
 
     _updateTimeTask: Task
     updateInterval: number | undefined
-    streamInfo: StreamInfo
+    streamInfo: StreamData
     stream: Stream
     isLoading: boolean
 
@@ -42,14 +33,16 @@ export class TimerViewer extends LitElement {
         this.isLoading = true
         this.updateInterval = undefined;
         this.streamInfo = {
-            day: '', 
-            time: Duration.fromISO('P3Y') ,
+            isSpecial: false,
+            isVacation: false,
+            time: Duration.fromISO('P3Y'),
             date: DateTime.fromISO('2077-12-30T12:00:00.000')
         };
         this.stream = {
-            day: '',
             time: '',
-            date: '',
+            date: DateTime.fromISO('2077-12-30T12:00:00.000'),
+            isSpecial: false,
+            isVacation: false,
             isLive: false,
         };
         this._updateTimeTask = new Task (this, {
@@ -59,13 +52,14 @@ export class TimerViewer extends LitElement {
             if (this.streamInfo.time.seconds < 0 && this.streamInfo.time.seconds > -7200) {
                 this.stream.isLive = true
             }
-            this.stream.day = this.streamInfo?.day
             this.stream.time = useFormatter(this.streamInfo.time)
-            this.stream.date = this.streamInfo.date.toLocal().toFormat("LLL dd', at' t ZZZZ")
+            this.stream.date = this.streamInfo.date
+            this.stream.isSpecial = this.streamInfo.isSpecial
+            this.stream.isVacation = this.streamInfo.isVacation
 
             this.isLoading = false
-            }
-        })
+        }
+    })
 
 
     }
@@ -92,6 +86,24 @@ export class TimerViewer extends LitElement {
                 </div>
             `
         }
+        if (this.stream.isSpecial) {
+            return html`
+                <div class="bg_img">
+                    <div class="bg_color">
+                        <stream-timer ?special=${true} time=${this.stream.time} .date=${this.stream.date}></stream-timer>
+                    </div>
+                </div>
+            `
+        }
+        if (this.stream.isVacation) {
+            return html`
+                <div class="bg_img">
+                    <div class="bg_color">
+                        <vacation-timer time=${this.stream.time} .date=${this.stream.date}></vacation-timer>
+                    </div>
+                </div>
+            `
+        }
         if (this.stream.isLive) {
             return html `
             <div class="bg_img">
@@ -102,7 +114,7 @@ export class TimerViewer extends LitElement {
         return html `
                 <div class="bg_img">
                     <div class="bg_color">
-                        <stream-timer time=${this.stream.time} date=${this.stream.date}></stream-timer>
+                        <stream-timer time=${this.stream.time} .date=${this.stream.date}></stream-timer>
                     </div>
                 </div>
         `
@@ -110,7 +122,7 @@ export class TimerViewer extends LitElement {
     
     static styles?: CSSResultGroup | undefined = css`
         .bg_img {
-            background-image: url('./public/sss_logo.png');
+            background-image: url('/sss_logo.png');
             background-position: center;
             background-repeat: no-repeat;
             background-size: contain;

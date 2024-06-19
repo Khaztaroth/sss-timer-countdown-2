@@ -1,17 +1,18 @@
 import { DateTime, Duration } from "luxon"
-import { StreamInfo } from "../timer-viewer"
-type StreamDays = 'wed' | 'sun' | 'nextWed'
+import { StreamDays, Days, StreamData } from "./types"
 
-type Days = {
-    wed: boolean,
-    sun: boolean,
-    nextWed: boolean,
-}
 
-export function getCurrentTime(days: Days): StreamInfo  {
+export function getCurrentTime(days: Days): StreamData  {
     const inNY = {zone: "America/New_York"}
     const nowInNY = DateTime.local(inNY)
     const startOfWeek = nowInNY.startOf('week')
+
+
+    const DateSpecial = DateTime.fromISO(days.special)
+    const TimeUntilSpecial = DateSpecial.diff(nowInNY, ['days', 'hours', 'minutes', 'seconds'])
+    
+    const DateVacation = DateTime.fromISO(`${days.vacation}T21:00:00.000-04:00`)
+    const TimeUntilVacation = DateVacation.diff(nowInNY, ['days', 'hours', 'minutes', 'seconds'])
 
     const week = {wed: 3, sun: 7}
     const upcomingDay: Record<StreamDays, number> = {
@@ -37,20 +38,36 @@ export function getCurrentTime(days: Days): StreamInfo  {
     if (days.sun && timeUntil('sun').days >=0 && timeUntil('sun').hours >= -1) {
         return timeUntilSun(timeUntil('sun'), upcomingStreamDate('sun'))
      }
-     if (days.nextWed && timeUntil('nextWed').days >=0 && timeUntil('nextWed').hours >= -1) {
+    if (days.nextWed && timeUntil('nextWed').days >=0 && timeUntil('nextWed').hours >= -1) {
         return timeUntilNextWed(timeUntil('nextWed'), upcomingStreamDate('nextWed'))
      }
-
-     return {
-        day: '', 
+    if (!days.wed && !days.sun && !days.nextWed) {
+         return {
+             isSpecial: false,
+             isVacation: true,
+             time: TimeUntilVacation,
+             date: DateVacation,
+         }
+    }
+    if (TimeUntilSpecial.days >= 0 && TimeUntilSpecial.hours >= -1) {
+        return {
+            isSpecial: true,
+            isVacation: false,
+            time: TimeUntilSpecial, 
+            date: DateSpecial,
+        }
+    }
+    return {
+        isSpecial: false, 
+        isVacation: false,
         time: Duration.fromISO('P3Y') ,
         date: DateTime.fromISO('2077-12-30T12:00:00.000')
-     }
-}
+    }    
 
-function timeUntilWed(time: Duration, date: DateTime): StreamInfo {
+function timeUntilWed(time: Duration, date: DateTime): StreamData {
     const timer = {
-        day: 'Wednesday stream',
+        isSpecial: false,
+        isVacation: false,
         time: time,
         date: date
     }
@@ -60,7 +77,8 @@ function timeUntilWed(time: Duration, date: DateTime): StreamInfo {
 
 function timeUntilSun(time: Duration, date: DateTime) {
     const timer = {
-        day: 'Sunday stream',
+        isSpecial: false,
+        isVacation: false,
         time: time,
         date: date
     }
@@ -70,10 +88,12 @@ function timeUntilSun(time: Duration, date: DateTime) {
 
 function timeUntilNextWed(time: Duration, date: DateTime) {
     const timer = {
-        day: 'Wednesday stream',
+        isSpecial: false,
+        isVacation: false,
         time: time,
         date: date
     }
 
     return timer
+}
 }
