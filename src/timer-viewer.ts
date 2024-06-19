@@ -76,20 +76,26 @@ export class TimerViewer extends LitElement {
         }
     }
 
+    private classes = {
+        bg_img: 'top-0 h-screen w-auto',
+        bg_color: "top-0 vertical-mid h-full",
+        main_element: 'flex-column h-screen',
+    }
+
     render() {
         if (this.isLoading) {
             return html `
-                <div class="bg_img">
-                    <div class="bg_color">
-                        <p>Asking Julia...</p>
+                <div id="bg_img" class=${this.classes.bg_img}>
+                    <div id="bg_color" class=${this.classes.bg_color}>
+                        <p class="text-9xl text-center py-12">Asking Julia...</p>
                     </div>
                 </div>
             `
         }
         if (this.stream.isSpecial) {
             return html`
-                <div class="bg_img">
-                    <div class="bg_color">
+                <div id="bg_img" class=${this.classes.bg_img}>
+                    <div id="bg_color">
                         <stream-timer ?special=${true} time=${this.stream.time} .date=${this.stream.date}></stream-timer>
                     </div>
                 </div>
@@ -97,23 +103,23 @@ export class TimerViewer extends LitElement {
         }
         if (this.stream.isVacation) {
             return html`
-                <div class="bg_img">
-                    <div class="bg_color">
-                        <vacation-timer time=${this.stream.time} .date=${this.stream.date}></vacation-timer>
+                <div id="bg_img" class=${this.classes.bg_img}>
+                    <div id="bg_color" class=${this.classes.bg_color}>
+                        <vacation-timer time=${this.stream.time} .date=${this.stream.date} class=${this.classes.main_element}></vacation-timer>
                     </div>
                 </div>
             `
         }
         if (this.stream.isLive) {
             return html `
-            <div class="bg_img">
+            <div id="bg_img" class=${this.classes.bg_img}>
                 <is-live></is-live>
             </div>
             `
         }
         return html `
-                <div class="bg_img">
-                    <div class="bg_color">
+                <div id="bg_img" class=${this.classes.bg_img}>
+                    <div id="bg_color" class=${this.classes.bg_color}>
                         <stream-timer time=${this.stream.time} .date=${this.stream.date}></stream-timer>
                     </div>
                 </div>
@@ -121,23 +127,16 @@ export class TimerViewer extends LitElement {
     }
     
     static styles?: CSSResultGroup | undefined = css`
-        .bg_img {
+        #bg_img {
             background-image: url('/sss_logo.png');
             background-position: center;
             background-repeat: no-repeat;
             background-size: contain;
-
-            height: 40vw;
         }
-        .bg_color {
-            height: 40vw;
+        #bg_color {
             background-color: rgba(36, 36, 36, 0.85)
         }
-        p {
-            font-size: 5.3rem;
-            text-align: center;
-            align-items: center;   
-        }
+        @unocss-placeholder;
     `
 }
 
