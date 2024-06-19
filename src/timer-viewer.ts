@@ -6,9 +6,9 @@ import { getCurrentTime } from "./timing/timer";
 import { useFormatter } from "./timing/formatter";
 import { StreamData, Stream, Days } from "./timing/types";
 
-import './assets/blocks/liveDisplay'
-import './assets/blocks/timerDisplay'
-import './assets/blocks/vacationDisplay'
+import './blocks/liveDisplay'
+import './blocks/timerDisplay'
+import './blocks/vacationDisplay'
 
 const days: Days = {
     "wed":false,
