@@ -17,8 +17,8 @@ export class VacationTimer extends LitElement {
     render() {
         const date = this.date?.toFormat('EEEE, LLLL dd')
         return html`
-                    <h1 class="text-center py-12 mb-2 center lt-sm:text-6xl sm:text-8xl xl:text-9xl"> Currently <span id='striken'>GONE</span></h1>
-                    <h3 class="text-center text-bold lt-sm:text-5xl sm:text-5xl xl:text-8xl">We are hoping to be back <br> on ${date} at our usual time</h3>
+                    <h1 class="dinBold headerLine"> Currently <span id='striken'>GONE</span></h1>
+                    <h2 class="dinRegular trailingLine">We are hoping to be back <br> on ${date} at our usual time</h2>
                 `
     }
 

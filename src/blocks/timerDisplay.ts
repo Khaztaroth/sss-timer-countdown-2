@@ -15,36 +15,14 @@ export class StreamTimer extends LitElement {
     render() {
         const date = this.date?.toFormat("LLL dd', at' t ZZZZ")
         return html`
-            <h1> ${this.special? "Special stream in": "Next stream is in"}</h1>
-            <h2>${this.time}</h2>
-            <h3>on ${date}</h3>
+            <h1 class="dinBold headerLine"> ${this.special? "Special stream in": "Next stream is in"}</h1>
+            <h2 class="dinRegular trailingLine">${this.time} <br> on ${date}</h2>
         `
     }
-
-    static styles?: CSSResultGroup | undefined = css`
-        h1 {
-            margin-bottom: 2rem;
-            font-family: 'D-Din-Bold';
-            font-size: 8rem;
-            text-align: center;
-            align-items: center;   
-        }
-        h2 {
-            margin-top: 0;
-            margin-bottom: 0;
-            font-size: 4rem;
-            font-weight: 600;
-            text-align: center;
-        }
-        h3 {
-            margin-top: 0;
-            margin-bottom: 0;
-            font-weight: 600;
-            font-size: 4rem;
-            text-align: center;
-        }
-    `
+    static styles?: CSSResultGroup | undefined = 
+    css` @unocss-placeholder `
 }
+
 
 declare global {
     interface HTMLElementTagNameMap {

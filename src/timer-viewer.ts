@@ -11,10 +11,10 @@ import './blocks/timerDisplay'
 import './blocks/vacationDisplay'
 
 const days: Days = {
-    "wed":false,
-    "sun":false,
-    "nextWed":false,
-    "special":"2024-06-08T21:00:00.000-04:00",
+    "wed":true,
+    "sun":true,
+    "nextWed":true,
+    "special":"2024-06-19T20:00:00.000-04:00",
     "vacation":"2024-06-30"
 }
 
@@ -77,51 +77,48 @@ export class TimerViewer extends LitElement {
     }
 
     private classes = {
-        bg_img: 'top-0 h-screen w-auto',
-        bg_color: "top-0 vertical-mid h-full",
-        main_element: 'flex-column h-screen',
+        bg_img: 'absolute size-11/12 place-content-center border-white border-4 border-solid',
+        bg_color: 'absolute vertical-mid',
+        main_element: 'flex-column h-full relative',
     }
 
     render() {
         if (this.isLoading) {
             return html `
                 <div id="bg_img" class=${this.classes.bg_img}>
-                    <div id="bg_color" class=${this.classes.bg_color}>
-                        <p class="text-9xl text-center py-12">Asking Julia...</p>
-                    </div>
+                    <div id="bg_color" class=${this.classes.bg_color}></div>
+                        <p class="text-9xl text-center w-full h-full relative">Asking Julia...</p>
                 </div>
             `
         }
         if (this.stream.isSpecial) {
             return html`
                 <div id="bg_img" class=${this.classes.bg_img}>
-                    <div id="bg_color">
+                <div id="bg_color" class=${this.classes.bg_color}></div>
                         <stream-timer ?special=${true} time=${this.stream.time} .date=${this.stream.date}></stream-timer>
-                    </div>
                 </div>
             `
         }
         if (this.stream.isVacation) {
             return html`
                 <div id="bg_img" class=${this.classes.bg_img}>
-                    <div id="bg_color" class=${this.classes.bg_color}>
+                    <div id="bg_color" class=${this.classes.bg_color}></div>
                         <vacation-timer time=${this.stream.time} .date=${this.stream.date} class=${this.classes.main_element}></vacation-timer>
-                    </div>
                 </div>
             `
         }
         if (this.stream.isLive) {
             return html `
             <div id="bg_img" class=${this.classes.bg_img}>
-                <is-live></is-live>
+                <div id="bg_color" class=${this.classes.bg_color}></div>
+                    <is-live></is-live>
             </div>
             `
         }
         return html `
                 <div id="bg_img" class=${this.classes.bg_img}>
-                    <div id="bg_color" class=${this.classes.bg_color}>
-                        <stream-timer time=${this.stream.time} .date=${this.stream.date}></stream-timer>
-                    </div>
+                    <div id="bg_color" class=${this.classes.bg_color}></div>
+                        <stream-timer time=${this.stream.time} .date=${this.stream.date} class=${this.classes.main_element}></stream-timer>
                 </div>
         `
     }
@@ -134,7 +131,8 @@ export class TimerViewer extends LitElement {
             background-size: contain;
         }
         #bg_color {
-            background-color: rgba(36, 36, 36, 0.85)
+            background-color: rgba(36, 36, 36, 0.85);
+            background-size: contain;
         }
         @unocss-placeholder;
     `

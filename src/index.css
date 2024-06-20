@@ -8,9 +8,10 @@
 @font-face {
    font-family: 'D-Din-Bold';
   src: url('/fonts/d-dincondensed-bold.woff2') format('woff2');
-  font-weight: 800;
+  font-weight: 900;
   font-style: bold;
 }
+
 :root {
   font-family: 'D-Din-Condensed', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -29,8 +30,13 @@
 body {
   min-width: 320px;
   min-height: 95vh;
+}
 
-  border: solid white;
+h1 {
+  font-family: 'D-Din-Bold';
+}
+h2 {
+  font-family: 'D-Din-Condensed';
 }
 
 @media (prefers-color-scheme: light) {
