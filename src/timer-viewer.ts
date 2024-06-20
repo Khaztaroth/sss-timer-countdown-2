@@ -9,6 +9,7 @@ import { StreamData, Stream, Days } from "./timing/types";
 import './blocks/liveDisplay'
 import './blocks/timerDisplay'
 import './blocks/vacationDisplay'
+import './blocks/footer'
 
 const days: Days = {
     "wed":false,
@@ -85,10 +86,14 @@ export class TimerViewer extends LitElement {
     render() {
         if (this.isLoading) {
             return html `
-                <div id="bg_img" class=${this.classes.bg_img}>
+                <div id="bg_img"
+                 class=${this.classes.bg_img}
+                 bg="bgShadow"
+                 >
                     <div id="bg_color" class=${this.classes.bg_color}></div>
                         <h1 class="dinBold headerLine">Asking Julia...</h1>
                 </div>
+                <footer-links class="fixed w-full -left-[1px] text-center bottom-0 bg-accentRed"></footer-links>
             `
         }
         if (this.stream.isSpecial) {
@@ -120,6 +125,7 @@ export class TimerViewer extends LitElement {
                     <div id="bg_color" class=${this.classes.bg_color}></div>
                         <stream-timer time=${this.stream.time} .date=${this.stream.date} class=${this.classes.main_element}></stream-timer>
                 </div>
+                <footer-links class="fixed w-full -left-[1px] text-center bottom-0 bg-accentRed"></footer-links>
         `
     }
     
