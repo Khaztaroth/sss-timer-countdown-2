@@ -17,10 +17,12 @@ export class StreamTimer extends LitElement {
         return html`
             <h1 class="dinBold headerLine"> ${this.special? "Special stream in": "Next stream is in"}</h1>
             <h2 class="dinRegular trailingLine">${this.time} <br> on ${date}</h2>
+            <h2  class="link"><a href="https://www.twitch.tv/secretsleepoversociety">twitch.tv/secretsleepoversociety</a></h2>
         `
     }
-    static styles?: CSSResultGroup | undefined = 
-    css` @unocss-placeholder `
+    static styles?: CSSResultGroup | undefined = css` 
+    /* @unocss-placeholder;  */
+    `
 }
 
 

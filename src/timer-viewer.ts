@@ -11,10 +11,10 @@ import './blocks/timerDisplay'
 import './blocks/vacationDisplay'
 
 const days: Days = {
-    "wed":true,
+    "wed":false,
     "sun":true,
     "nextWed":true,
-    "special":"2024-06-19T20:00:00.000-04:00",
+    "special":"2024-06-20T20:00:00.000-04:00",
     "vacation":"2024-06-30"
 }
 
@@ -77,9 +77,9 @@ export class TimerViewer extends LitElement {
     }
 
     private classes = {
-        bg_img: 'absolute size-11/12 place-content-center border-white border-4 border-solid',
-        bg_color: 'absolute vertical-mid',
-        main_element: 'flex-column h-full relative',
+        bg_img: "bgBlock",
+        bg_color: "absolute vertical-mid",
+        main_element: "flex-column size-full relative",
     }
 
     render() {
@@ -87,7 +87,7 @@ export class TimerViewer extends LitElement {
             return html `
                 <div id="bg_img" class=${this.classes.bg_img}>
                     <div id="bg_color" class=${this.classes.bg_color}></div>
-                        <p class="text-9xl text-center w-full h-full relative">Asking Julia...</p>
+                        <h1 class="dinBold headerLine">Asking Julia...</h1>
                 </div>
             `
         }
@@ -123,7 +123,7 @@ export class TimerViewer extends LitElement {
         `
     }
     
-    static styles?: CSSResultGroup | undefined = css`
+    static styles?: CSSResultGroup | undefined = css` 
         #bg_img {
             background-image: url('/sss_logo.png');
             background-position: center;
@@ -134,7 +134,7 @@ export class TimerViewer extends LitElement {
             background-color: rgba(36, 36, 36, 0.85);
             background-size: contain;
         }
-        @unocss-placeholder;
+        /* @unocss-placeholder; */
     `
 }
 

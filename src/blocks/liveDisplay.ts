@@ -6,16 +6,12 @@ import { customElement } from "lit/decorators.js";
 export class IsLive extends LitElement {
     render() {
         return html `
-            <h1>We are live!</h1>
+            <h1 class="dinBold headerLine">We are live!</h1>
         `
     }
 
-    static styles?: CSSResultGroup | undefined = css`
-        h1 {
-            display: flex;
-            margin: auto;
-            font-size: 2rem;
-        }
+    static styles?: CSSResultGroup | undefined = css` 
+    /* @unocss-placeholder ; */
     `
 };
 

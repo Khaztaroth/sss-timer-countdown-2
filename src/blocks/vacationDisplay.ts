@@ -19,10 +19,11 @@ export class VacationTimer extends LitElement {
         return html`
                     <h1 class="dinBold headerLine"> Currently <span id='striken'>GONE</span></h1>
                     <h2 class="dinRegular trailingLine">We are hoping to be back <br> on ${date} at our usual time</h2>
+                    <a href="https://www.twitch.tv/secretsleepoversociety">twitch.tv/secretsleepoversociety</a>
                 `
     }
 
-    static styles?: CSSResultGroup | undefined = css`
+    static styles?: CSSResultGroup | undefined = css` 
         #striken {
             position: relative;
         }
@@ -39,7 +40,7 @@ export class VacationTimer extends LitElement {
             -o-transform: rotate(-4deg);
             transform: rotate(-4deg);
         }
-        @unocss-placeholder;
+        /* @unocss-placeholder; */
     `
 }
 
