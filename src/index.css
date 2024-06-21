@@ -33,12 +33,6 @@ body {
   max-width: 95vw;
 }
 
-h1 {
-  font-family: 'D-Din-Bold';
-}
-h2 {
-  font-family: 'D-Din-Condensed';
-}
 
 @media (prefers-color-scheme: light) {
   :root {

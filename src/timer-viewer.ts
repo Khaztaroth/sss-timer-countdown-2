@@ -78,54 +78,50 @@ export class TimerViewer extends LitElement {
     }
 
     private classes = {
-        bg_img: "bgBlock",
-        bg_color: "absolute vertical-mid",
-        main_element: "flex-column size-full relative",
+        bg_img: "bgBlock bgShadow",
+        main_element: "grid grid-rows-[repeat(2,min-content)] size-full relative",
+        footer: "fixed w-full -left-[1px] bottom-2 bg-accentRed link",
     }
 
     render() {
         if (this.isLoading) {
             return html `
-                <div id="bg_img"
-                 class=${this.classes.bg_img}
-                 bg="bgShadow"
-                 >
-                    <div id="bg_color" class=${this.classes.bg_color}></div>
+                <div id="bg_img" class=${this.classes.bg_img}></div>
                         <h1 class="dinBold headerLine">Asking Julia...</h1>
                 </div>
-                <footer-links class="fixed w-full -left-[1px] text-center bottom-0 bg-accentRed"></footer-links>
+                <footer-links class=${this.classes.footer}></footer-links>
             `
         }
         if (this.stream.isSpecial) {
             return html`
                 <div id="bg_img" class=${this.classes.bg_img}>
-                <div id="bg_color" class=${this.classes.bg_color}></div>
                         <stream-timer ?special=${true} time=${this.stream.time} .date=${this.stream.date}></stream-timer>
                 </div>
+                <footer-links class=${this.classes.footer}></footer-links>
             `
         }
         if (this.stream.isVacation) {
             return html`
                 <div id="bg_img" class=${this.classes.bg_img}>
-                    <div id="bg_color" class=${this.classes.bg_color}></div>
                         <vacation-timer time=${this.stream.time} .date=${this.stream.date} class=${this.classes.main_element}></vacation-timer>
                 </div>
+                <footer-links class=${this.classes.footer}></footer-links>
             `
         }
         if (this.stream.isLive) {
             return html `
             <div id="bg_img" class=${this.classes.bg_img}>
-                <div id="bg_color" class=${this.classes.bg_color}></div>
                     <is-live></is-live>
             </div>
+            <footer-links class=${this.classes.footer}></footer-links>
+
             `
         }
         return html `
                 <div id="bg_img" class=${this.classes.bg_img}>
-                    <div id="bg_color" class=${this.classes.bg_color}></div>
                         <stream-timer time=${this.stream.time} .date=${this.stream.date} class=${this.classes.main_element}></stream-timer>
                 </div>
-                <footer-links class="fixed w-full -left-[1px] text-center bottom-0 bg-accentRed"></footer-links>
+                <footer-links class=${this.classes.footer}></footer-links>
         `
     }
     
