@@ -36,12 +36,11 @@ export default defineConfig({
       textSmall: "lt-sm:text-5xl sm:text-5xl xl:text-8xl",
       textMinimal: "lt-sm:text-3xl sm:text-3xl xl:text-5xl ",
       textfooter: "lt-sm:text-lg sm:text-lg xl:text-xl",
-      bgShadow: "before:bg-solidGray before:content-[''] before:absolute before:size-full before:top-0 before:left-0 before:opacity-95",
-      bgBlock: "absolute size-11/12 lt-sm:left-4 lt-lg:left-8 lg:left-12 xl:left-18 top-8 solidOutline outline-offset-8",
-      headerLine: "center text-bolder center textBig drop-shadow-mid",
-      trailingLine: "center text-bold textSmall drop-shadow-close",
-      streamLink: "center text-bold textMinimal drop-shadow-close hideLink",
-      link: "center text-bold textFooter hideLink",
+      bgShadow: "before:content-[''] before:absolute before:size-full before:top-0 before:left-0 before:opacity-95",      bgBlock: "absolute size-11/12 lt-sm:left-4 lt-lg:left-8 lg:left-12 xl:left-18 top-8 solidOutline outline-offset-8",
+      headerLine: "center text-bolder center textBig",
+      trailingLine: "center text-bold textSmall",
+      streamLink: "center text-bold textMinimal hideLink link:text-inherit visited:text-inherit",
+      link: "center text-bold textFooter",
     }
   ],
 })

@@ -19,6 +19,25 @@ const days: Days = {
     "vacation":"2024-06-30"
 }
 
+function loadingMessage(): string {
+    var messages = [
+        'Asking Julia...',
+        'Confirming with Joy...',
+        '*Checks notes*',
+        'Waiting for Olive...',
+        'Asking Jacob...',
+        'Trying to remember...',
+        "Don't tell anyone but...",
+        "If I'm not mistaken...",
+        'Waiting for Clara to get off the phone...',
+        'Summoning braincells...',
+    ];
+
+    var Number = Math.floor(Math.random()*messages.length);
+
+    return messages[Number]
+}
+
 @customElement('timer-viewer')
 export class TimerViewer extends LitElement {
 
@@ -80,14 +99,14 @@ export class TimerViewer extends LitElement {
     private classes = {
         bg_img: "bgBlock bgShadow",
         main_element: "grid grid-rows-[repeat(2,min-content)] size-full relative",
-        footer: "fixed w-full -left-[1px] bottom-2 bg-accentRed link",
+        footer: "fixed w-full -left-[1px] bottom-2 bg-accentGold link footer",
     }
 
     render() {
         if (this.isLoading) {
             return html `
-                <div id="bg_img" class=${this.classes.bg_img}></div>
-                        <h1 class="dinBold headerLine">Asking Julia...</h1>
+                <div id="bg_img" class=${this.classes.bg_img}>
+                        <h1 class="dinBold headerLine">${loadingMessage()}</h1>
                 </div>
                 <footer-links class=${this.classes.footer}></footer-links>
             `
@@ -119,7 +138,7 @@ export class TimerViewer extends LitElement {
         }
         return html `
                 <div id="bg_img" class=${this.classes.bg_img}>
-                        <stream-timer time=${this.stream.time} .date=${this.stream.date} class=${this.classes.main_element}></stream-timer>
+                    <stream-timer time=${this.stream.time} .date=${this.stream.date} class=${this.classes.main_element}></stream-timer>
                 </div>
                 <footer-links class=${this.classes.footer}></footer-links>
         `
@@ -132,10 +151,20 @@ export class TimerViewer extends LitElement {
             background-repeat: no-repeat;
             background-size: contain;
         }
-        #bg_color {
-            background-color: rgba(36, 36, 36, 0.85);
-            background-size: contain;
+        @media (prefers-color-scheme: light) {
+        .footer {
+            color: black;
         }
+        #bg_img::before {
+            background-color: rgb(255, 255, 255);
+        }}
+        @media (prefers-color-scheme: dark) {
+        .footer {
+            color: black
+        }
+        #bg_img:before {
+            background-color: rgb(53, 53, 53);
+        }}
         /* @unocss-placeholder; */
     `
 }

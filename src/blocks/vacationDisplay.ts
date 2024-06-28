@@ -40,6 +40,22 @@ export class VacationTimer extends LitElement {
             -o-transform: rotate(-4deg);
             transform: rotate(-4deg);
         }
+        a > * {
+            color: inherit;
+            text-decoration: none;
+        }
+        a:visited {
+            color: inherit;    
+            text-decoration: none;
+        }
+        a:link {
+            color: inherit;    
+            text-decoration: none;
+        }
+        a:hover {
+            color: inherit;
+            text-decoration: underline !important;
+        }
         /* @unocss-placeholder; */
     `
 }

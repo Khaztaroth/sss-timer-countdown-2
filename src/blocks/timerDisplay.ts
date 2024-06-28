@@ -20,7 +20,23 @@ export class StreamTimer extends LitElement {
             <h2  class="streamLink"><a href="https://www.twitch.tv/secretsleepoversociety">twitch.tv/secretsleepoversociety</a></h2>
         `
     }
-    static styles?: CSSResultGroup | undefined = css` 
+    static styles?: CSSResultGroup | undefined = css`
+        a > * {
+            color: inherit;
+            text-decoration: none;
+        }
+        a:visited {
+            color: inherit;    
+            text-decoration: none;
+        }
+        a:link {
+            color: inherit;    
+            text-decoration: none;
+        }
+        a:hover {
+            color: inherit;
+            text-decoration: underline !important;
+        }
     /* @unocss-placeholder;  */
     `
 }
