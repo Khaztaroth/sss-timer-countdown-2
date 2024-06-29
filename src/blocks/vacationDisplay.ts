@@ -19,7 +19,7 @@ export class VacationTimer extends LitElement {
         return html`
                     <h1 class="dinBold headerLine"> Currently <span id='striken'>GONE</span></h1>
                     <h2 class="dinRegular trailingLine">We are hoping to be back <br> on ${date} at our usual time</h2>
-                    <a href="https://www.twitch.tv/secretsleepoversociety">twitch.tv/secretsleepoversociety</a>
+                    <h2 class="streamLink" href="https://www.twitch.tv/secretsleepoversociety">twitch.tv/secretsleepoversociety</h2>
                 `
     }
 
@@ -33,12 +33,21 @@ export class VacationTimer extends LitElement {
             left: 0;
             top: 40%;
             right: 0;
-            border-top: calc(1rem + 3vw) solid rgba(255, 255, 255, 0.99);
             -webkit-transform: rotate(-4deg);
             -moz-transform: rotate(-4deg);
             -ms-transform: rotate(-4deg);
             -o-transform: rotate(-4deg);
             transform: rotate(-4deg);
+        }
+        @media (prefers-color-scheme: dark) {
+            #striken::before {
+                border-top: calc(1rem + 3vw) solid rgba(255, 255, 255, 0.99);
+            }
+        }
+        @media (prefers-color-scheme: light) {
+            #striken::before {
+                border-top: calc(1rem + 3vw) solid rgba(53, 53, 53, 0.99);
+            }
         }
         a > * {
             color: inherit;

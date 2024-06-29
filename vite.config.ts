@@ -12,6 +12,15 @@ export default defineConfig({
       formats: ['es']
     }
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://sss-timer-dashboard.khaz.workers.dev/dash',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
+  },
   plugins: [
     UnoCSS({
       mode: 'shadow-dom',

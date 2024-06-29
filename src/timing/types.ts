@@ -1,10 +1,15 @@
 import { DateTime, Duration } from "luxon"
 
-export type StreamData = {
+export type StreamTimer = {
     isSpecial: boolean,
     isVacation: boolean,
     time: Duration,
     date: DateTime,
+}
+
+export type StreamInfo = {
+    title: string,
+    game: string
 }
 
 export type Stream = {
@@ -15,7 +20,7 @@ export type Stream = {
     isLive: boolean,
 }
 
-export type Days = {
+export type Days  = {
     wed: boolean,
     sun: boolean,
     nextWed: boolean,

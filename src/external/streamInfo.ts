@@ -1,49 +1,36 @@
-// const channelName = 'secretsleepoversociety';
-const channelName = 'uberhaxornova';
+const channelName = 'secretsleepoversociety';
 
-export function useLive(): boolean {
+export async function useActiveDays(): Promise<string> {
+    const activeDays = async () => await fetch(`/api`)
+    .then((res) => res.text())
 
-    let isLive = false
-
-    async function streamUptime(channel: string): Promise<boolean> {
-        const res = await fetch(`https://decapi.me/twitch/uptime/${channel}`)
-            if (!res.ok) {
-                throw new Error('Failed to fetch uptime data')
-            } else {
-                const resp = await res.text()
-                return !resp.includes('offline')
-            };
-    };
-
-    async function liveStatus(channel: string) {
-        isLive = await streamUptime(channel);
-    }
-
-    console.log(isLive)
-    liveStatus(channelName);
-    console.log(isLive)
-    return isLive;
+    return await activeDays()
 }
 
-export function useTitle(): string | undefined {
-    let title: string = '';
+export async function useLive(): Promise<boolean> {
+    const streamUptime = async (channel: string) => await fetch(`https://decapi.me/twitch/uptime/${channel}`)
+        .then((res) => res.text())
 
-    async function streamTitle() {
-        const res = await fetch(`https://decapi.me/twitch/status/${channelName}`)
-        if (!res.ok) {
-            throw new Error('Could not get title information')
-        } else {
-            var resp = await res.text()
-            title = resp
-        };
-    };
+    const isOnline = async () => {
+        const uptime = await streamUptime(channelName)
+        if (uptime.includes('offline')) {
+            return false
+        } else return true
+    } 
 
-    streamTitle();
-    return title
+    return await isOnline()
 }
 
-export function useGameName(): string {
-    const gameName = ''
+export async function useTitle(): Promise<string> {
+    const title = async (channel: string) => await fetch(`https://decapi.me/twitch/status/${channel}`)
+    .then((res) => res.text())
 
-    return gameName
+    return await title(channelName)
+}
+
+export async function useGameName(): Promise<string> {
+    const gameName = async (channel: string) => await fetch(`https://decapi.me/twitch/game/${channel}`)
+    .then((res) => res.text())
+
+    return await gameName(channelName)
 }

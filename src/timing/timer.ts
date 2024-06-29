@@ -1,8 +1,8 @@
 import { DateTime, Duration } from "luxon"
-import { StreamDays, Days, StreamData } from "./types"
+import { StreamDays, Days, StreamTimer } from "./types"
 
 
-export function getCurrentTime(days: Days): StreamData  {
+export function getCurrentTime(days: Days): StreamTimer  {
     const inNY = {zone: "America/New_York"}
     const nowInNY = DateTime.local(inNY)
     const startOfWeek = nowInNY.startOf('week')
@@ -64,7 +64,7 @@ export function getCurrentTime(days: Days): StreamData  {
         date: DateTime.fromISO('2077-12-30T12:00:00.000')
     }    
 
-function timeUntilWed(time: Duration, date: DateTime): StreamData {
+function timeUntilWed(time: Duration, date: DateTime): StreamTimer {
     const timer = {
         isSpecial: false,
         isVacation: false,

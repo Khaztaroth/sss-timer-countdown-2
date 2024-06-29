@@ -2,24 +2,24 @@ import { Task } from "@lit/task";
 import { css, CSSResultGroup, html, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
 import { DateTime, Duration } from 'luxon'
-import { getCurrentTime } from "./timing/timer";
+import { Stream, Days, StreamTimer, StreamInfo} from "./timing/types";
 import { useFormatter } from "./timing/formatter";
-import { StreamData, Stream, Days } from "./timing/types";
+import { getCurrentTime } from "./timing/timer";
+import { useActiveDays, useGameName, useLive, useTitle } from "./external/streamInfo";
 
 import './blocks/liveDisplay'
 import './blocks/timerDisplay'
 import './blocks/vacationDisplay'
 import './blocks/footer'
-import { useLive, useTitle } from "./external/streamInfo";
-import { ifDefined } from "lit/directives/if-defined.js";
 
-const days: Days = {
-    "wed":false,
-    "sun":true,
-    "nextWed":true,
-    "special":"2024-06-20T20:00:00.000-04:00",
-    "vacation":"2024-06-30"
-}
+async function parseDays(): Promise<Days> {
+    const days = await useActiveDays()
+    const daysJson: Days = JSON.parse(days)
+
+    return daysJson
+};
+
+const days = async () => await parseDays();
 
 function loadingMessage(): string {
     var messages = [
@@ -29,8 +29,8 @@ function loadingMessage(): string {
         'Waiting for Olive...',
         'Asking Jacob...',
         'Trying to remember...',
-        "Don't tell anyone but...",
-        "If I'm not mistaken...",
+        "Gathering Yams...",
+        "T posing...",
         'Waiting for Clara to get off the phone...',
         'Summoning braincells...',
     ];
@@ -44,8 +44,10 @@ function loadingMessage(): string {
 export class TimerViewer extends LitElement {
 
     _updateTimeTask: Task
+    _fetchStreamInfo: Task
     updateInterval: number | undefined
-    streamInfo: StreamData
+    streamTimer: StreamTimer
+    streamInfo: StreamInfo
     stream: Stream
     isLoading: boolean
 
@@ -54,7 +56,7 @@ export class TimerViewer extends LitElement {
         super();
         this.isLoading = true
         this.updateInterval = undefined;
-        this.streamInfo = {
+        this.streamTimer = {
             isSpecial: false,
             isVacation: false,
             time: Duration.fromISO('P3Y'),
@@ -67,33 +69,36 @@ export class TimerViewer extends LitElement {
             isVacation: false,
             isLive: false,
         };
-        this._updateTimeTask = new Task (this, {
-            task: async () => {
-                // this.streamInfo = getCurrentTime(days)
-                this.streamInfo = {
-                    isSpecial: false,
-                    isVacation: false,
-                    date: DateTime.fromISO('2024-06-29T01:00:00.000'),
-                    time: this.streamInfo.date.diff(DateTime.local({zone: 'America/New_York'}), ['days', 'hours', 'minutes', 'seconds']),
-                }
-                
-            if (this.streamInfo.time.seconds < 0 && this.streamInfo.time.seconds > -7200) {
-                this.stream.isLive = true
-            }
-            this.stream.time = useFormatter(this.streamInfo.time)
-            this.stream.date = this.streamInfo.date
-            this.stream.isSpecial = this.streamInfo.isSpecial
-            this.stream.isVacation = this.streamInfo.isVacation
-
-            this.isLoading = false
+        this.streamInfo = {
+            title: '',
+            game: '',
         }
-    })
-
+        this._updateTimeTask = new Task (this, {
+            task: async() => {
+            this.streamTimer = getCurrentTime(await days())
+            this.stream.time = useFormatter(this.streamTimer.time)
+            this.stream.date = this.streamTimer.date
+            this.stream.isSpecial = this.streamTimer.isSpecial
+            this.stream.isVacation = this.streamTimer.isVacation
+        }
+    });
+    this._fetchStreamInfo = new Task (this, {
+        task: async () => {
+            this.stream.isLive = await useLive()
+            this.streamInfo.title = await useTitle()
+            this.streamInfo.game = await useGameName()
+        }
+    });
     }
 
     connectedCallback(): void {
         super.connectedCallback();
+        this._fetchStreamInfo.run();
         this.updateInterval = window.setInterval(() => this._updateTimeTask.run(), 1000)
+
+        window.setTimeout(() => {
+            this.isLoading = false
+        }, 1000)
     }
     
     disconnectedCallback(): void {
@@ -121,7 +126,7 @@ export class TimerViewer extends LitElement {
         if (this.stream.isLive) {
             return html `
             <div id="bg_img" class=${this.classes.bg_img}>
-                    <is-live title='THE TITLE'></is-live>
+                    <is-live title=${this.streamInfo.title} game=${this.streamInfo.game}></is-live>
             </div>
             <footer-links class=${this.classes.footer} ></footer-links>
 
