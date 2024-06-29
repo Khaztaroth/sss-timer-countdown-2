@@ -12,7 +12,7 @@ export type Stream = {
     date: DateTime,
     isSpecial: boolean,
     isVacation: boolean,
-    isLive: boolean,
+    isLive: Promise<boolean>,
 }
 
 export type Days = {

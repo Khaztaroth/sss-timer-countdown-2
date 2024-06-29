@@ -10,6 +10,7 @@ import './blocks/liveDisplay'
 import './blocks/timerDisplay'
 import './blocks/vacationDisplay'
 import './blocks/footer'
+import { useLive } from "./external/streamino";
 
 const days: Days = {
     "wed":false,
@@ -63,15 +64,15 @@ export class TimerViewer extends LitElement {
             date: DateTime.fromISO('2077-12-30T12:00:00.000'),
             isSpecial: false,
             isVacation: false,
-            isLive: false,
+            isLive: useLive(),
         };
         this._updateTimeTask = new Task (this, {
             task: async () => {
                 this.streamInfo = getCurrentTime(days)
 
-            if (this.streamInfo.time.seconds < 0 && this.streamInfo.time.seconds > -7200) {
-                this.stream.isLive = true
-            }
+            // if (this.streamInfo.time.seconds < 0 && this.streamInfo.time.seconds > -7200) {
+            //     this.stream.isLive = true
+            // }
             this.stream.time = useFormatter(this.streamInfo.time)
             this.stream.date = this.streamInfo.date
             this.stream.isSpecial = this.streamInfo.isSpecial
@@ -111,6 +112,15 @@ export class TimerViewer extends LitElement {
                 <footer-links class=${this.classes.footer}></footer-links>
             `
         }
+        if (await this.stream.isLive) {
+            return html `
+            <div id="bg_img" class=${this.classes.bg_img}>
+                    <is-live></is-live>
+            </div>
+            <footer-links class=${this.classes.footer} ></footer-links>
+
+            `
+        }
         if (this.stream.isSpecial) {
             return html`
                 <div id="bg_img" class=${this.classes.bg_img}>
@@ -125,15 +135,6 @@ export class TimerViewer extends LitElement {
                         <vacation-timer time=${this.stream.time} .date=${this.stream.date} class=${this.classes.main_element}></vacation-timer>
                 </div>
                 <footer-links class=${this.classes.footer}></footer-links>
-            `
-        }
-        if (this.stream.isLive) {
-            return html `
-            <div id="bg_img" class=${this.classes.bg_img}>
-                    <is-live></is-live>
-            </div>
-            <footer-links class=${this.classes.footer}></footer-links>
-
             `
         }
         return html `
