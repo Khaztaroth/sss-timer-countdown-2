@@ -10,7 +10,8 @@ import './blocks/liveDisplay'
 import './blocks/timerDisplay'
 import './blocks/vacationDisplay'
 import './blocks/footer'
-import { useLive } from "./external/streamino";
+import { useLive, useTitle } from "./external/streamInfo";
+import { ifDefined } from "lit/directives/if-defined.js";
 
 const days: Days = {
     "wed":false,
@@ -64,15 +65,21 @@ export class TimerViewer extends LitElement {
             date: DateTime.fromISO('2077-12-30T12:00:00.000'),
             isSpecial: false,
             isVacation: false,
-            isLive: useLive(),
+            isLive: false,
         };
         this._updateTimeTask = new Task (this, {
             task: async () => {
-                this.streamInfo = getCurrentTime(days)
-
-            // if (this.streamInfo.time.seconds < 0 && this.streamInfo.time.seconds > -7200) {
-            //     this.stream.isLive = true
-            // }
+                // this.streamInfo = getCurrentTime(days)
+                this.streamInfo = {
+                    isSpecial: false,
+                    isVacation: false,
+                    date: DateTime.fromISO('2024-06-29T01:00:00.000'),
+                    time: this.streamInfo.date.diff(DateTime.local({zone: 'America/New_York'}), ['days', 'hours', 'minutes', 'seconds']),
+                }
+                
+            if (this.streamInfo.time.seconds < 0 && this.streamInfo.time.seconds > -7200) {
+                this.stream.isLive = true
+            }
             this.stream.time = useFormatter(this.streamInfo.time)
             this.stream.date = this.streamInfo.date
             this.stream.isSpecial = this.streamInfo.isSpecial
@@ -81,7 +88,6 @@ export class TimerViewer extends LitElement {
             this.isLoading = false
         }
     })
-
 
     }
 
@@ -112,10 +118,10 @@ export class TimerViewer extends LitElement {
                 <footer-links class=${this.classes.footer}></footer-links>
             `
         }
-        if (await this.stream.isLive) {
+        if (this.stream.isLive) {
             return html `
             <div id="bg_img" class=${this.classes.bg_img}>
-                    <is-live></is-live>
+                    <is-live title='THE TITLE'></is-live>
             </div>
             <footer-links class=${this.classes.footer} ></footer-links>
 
