@@ -27,10 +27,11 @@
 }
 
 body {
+  outline: 0.5rem solid;
+  outline-offset: -0.5em;
+
   min-width: 320px;
   min-height: 95vh;
-
-  max-width: 95vw;
 }
 
 @media (prefers-color-scheme: light) {

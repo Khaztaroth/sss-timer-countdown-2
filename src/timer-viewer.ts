@@ -19,8 +19,6 @@ async function parseDays(): Promise<Days> {
     return daysJson
 };
 
-const days = async () => await parseDays();
-
 function loadingMessage(): string {
     var messages = [
         'Asking Julia...',
@@ -119,7 +117,7 @@ export class TimerViewer extends LitElement {
 
     private classes = {
         bg_img: "bgBlock bgShadow",
-        main_element: "grid grid-rows-[repeat(2,min-content)] size-full relative",
+        main_element: "grid grid-rows-testing size-full relative",
         footer: "fixed w-full -left-[1px] bottom-2 bg-accentGold link footer",
     }
 
