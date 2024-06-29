@@ -1,7 +1,7 @@
 const channelName = 'secretsleepoversociety';
 
 export async function useActiveDays(): Promise<string> {
-    const activeDays = async () => await fetch(`https://sss-timer-dashboard.khaz.workers.dev/check`)
+    const activeDays = async () => await fetch(`https://sss-timer-dashboard.khaz.workers.dev/check`, {credentials: "include"})
     .then((res) => res.text())
 
     return await activeDays()
