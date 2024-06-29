@@ -6,12 +6,6 @@ import presetAtributify from '@unocss/preset-attributify'
 import presetWind from '@unocss/preset-wind'
 
 export default defineConfig({
-  build: {
-    lib: {
-      entry: 'src/time-viwer.ts',
-      formats: ['es']
-    }
-  },
   server: {
     proxy: {
       '/api': {
