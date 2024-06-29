@@ -50,7 +50,25 @@ export class TimerViewer extends LitElement {
     streamInfo: StreamInfo
     stream: Stream
     isLoading: boolean
+    days: Days = {
+        wed: true,
+        sun: true,
+        nextWed: true,
+        special: '',
+        vacation: '',
+    }
 
+    connectedCallback(): void {
+        super.connectedCallback();
+        const getDays = async () => {this.days = await parseDays()}
+        getDays();
+        this._fetchStreamInfo.run();
+        this.updateInterval = window.setInterval(() => this._updateTimeTask.run(), 1000)
+
+        window.setTimeout(() => {
+            this.isLoading = false
+        }, 1000)
+    }
 
      constructor() {
         super();
@@ -75,32 +93,23 @@ export class TimerViewer extends LitElement {
         }
         this._updateTimeTask = new Task (this, {
             task: async() => {
-            this.streamTimer = getCurrentTime(await days())
+            this.streamTimer = getCurrentTime(this.days)
             this.stream.time = useFormatter(this.streamTimer.time)
             this.stream.date = this.streamTimer.date
             this.stream.isSpecial = this.streamTimer.isSpecial
             this.stream.isVacation = this.streamTimer.isVacation
         }
-    });
-    this._fetchStreamInfo = new Task (this, {
-        task: async () => {
-            this.stream.isLive = await useLive()
-            this.streamInfo.title = await useTitle()
-            this.streamInfo.game = await useGameName()
-        }
-    });
+        });
+        this._fetchStreamInfo = new Task (this, {
+            task: async () => {
+                this.stream.isLive = await useLive()
+                this.streamInfo.title = await useTitle()
+                this.streamInfo.game = await useGameName()
+            }
+        });
     }
 
-    connectedCallback(): void {
-        super.connectedCallback();
-        this._fetchStreamInfo.run();
-        this.updateInterval = window.setInterval(() => this._updateTimeTask.run(), 1000)
-
-        window.setTimeout(() => {
-            this.isLoading = false
-        }, 1000)
-    }
-    
+   
     disconnectedCallback(): void {
         super.disconnectedCallback();
         if(this.updateInterval !== undefined) {
