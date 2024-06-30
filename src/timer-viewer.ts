@@ -117,7 +117,7 @@ export class TimerViewer extends LitElement {
 
     private classes = {
         bg_img: "bgBlock bgShadow",
-        main_element: "grid grid-rows-testing size-full relative",
+        main_element: "size-full relative",
         footer: "fixed w-full -left-[1px] bottom-2 bg-accentGold link footer",
     }
 
@@ -142,7 +142,7 @@ export class TimerViewer extends LitElement {
         if (this.stream.isSpecial) {
             return html`
                 <div id="bg_img" class=${this.classes.bg_img}>
-                        <stream-timer ?special=${true} time=${this.stream.time} .date=${this.stream.date}></stream-timer>
+                        <stream-timer ?special=${true} time=${this.stream.time} .date=${this.stream.date} id="timer-element"></stream-timer>
                 </div>
                 <footer-links class=${this.classes.footer}></footer-links>
             `
@@ -150,14 +150,14 @@ export class TimerViewer extends LitElement {
         if (this.stream.isVacation) {
             return html`
                 <div id="bg_img" class=${this.classes.bg_img}>
-                        <vacation-timer time=${this.stream.time} .date=${this.stream.date} class=${this.classes.main_element}></vacation-timer>
+                        <vacation-timer time=${this.stream.time} .date=${this.stream.date} class=${this.classes.main_element} id="timer-element"></vacation-timer>
                 </div>
                 <footer-links class=${this.classes.footer}></footer-links>
             `
         }
         return html `
                 <div id="bg_img" class=${this.classes.bg_img}>
-                    <stream-timer time=${this.stream.time} .date=${this.stream.date} class=${this.classes.main_element}></stream-timer>
+                    <stream-timer time=${this.stream.time} .date=${this.stream.date} class=${this.classes.main_element}  id="timer-element"></stream-timer>
                 </div>
                 <footer-links class=${this.classes.footer}></footer-links>
         `
@@ -184,6 +184,13 @@ export class TimerViewer extends LitElement {
         #bg_img:before {
             background-color: rgb(53, 53, 53);
         }}
+        #timer-element {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 8rem 10rem 8rem 1fr;
+            grid-column-gap: 0px;
+            grid-row-gap: 5px; 
+        }
         /* @unocss-placeholder; */
     `
 }

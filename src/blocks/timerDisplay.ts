@@ -15,9 +15,12 @@ export class StreamTimer extends LitElement {
     render() {
         const date = this.date?.toFormat("LLL dd', at' t ZZZZ")
         return html`
-            <h1 class="dinBold headerLine"> ${this.special? "Special stream in": "Next stream is in"}</h1>
-            <h2 class="dinRegular trailingLine">${this.time} <br> on ${date}</h2>
-            <h2  class="streamLink"><a href="https://www.twitch.tv/secretsleepoversociety">twitch.tv/secretsleepoversociety</a></h2>
+            <h2 class="dinBold trailingLine" id="a"> ${this.special? "Special stream in:": "Next stream is in:"}</h2>
+            <div id="b">
+            <h1 class="dinBold headerLine mb-0 pb-0">${this.time}</h1>
+            <h2 class="dinRegular trailingLine mt-0 pt-0">on ${date} (local time)</h2>
+            </div>
+            <h2  class="streamLink" id="c"><a href="https://www.twitch.tv/secretsleepoversociety">twitch.tv/secretsleepoversociety</a></h2>
         `
     }
     static styles?: CSSResultGroup | undefined = css`
@@ -36,6 +39,15 @@ export class StreamTimer extends LitElement {
         a:hover {
             color: inherit;
             text-decoration: underline !important;
+        }
+        #a {
+            grid-area: 1 / 1 / 1 / 1;
+        }
+        #b {
+            grid-area: 2 / 1 / 2 / 1;
+        }
+        #c {
+            grid-area: 4 / 1 / 4 / 1;
         }
     /* @unocss-placeholder;  */
     `

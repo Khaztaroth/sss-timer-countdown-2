@@ -21,7 +21,7 @@ export default defineConfig({
     },
     gridTemplateRow: {
       'topHeavy': 'repeat(2, minmax(0, 1fr))',
-      'testing': 'auto',
+      'testing': 'repeat(2, minmax(0,1fr))',
     },
   },
   rules: [
@@ -39,8 +39,8 @@ export default defineConfig({
       textfooter: "lt-sm:text-lg sm:text-lg xl:text-xl",
       bgShadow: "before:content-[''] before:absolute before:size-full before:top-0 before:left-0 before:opacity-95",
       bgBlock: "absolute size-11/12 lt-sm:left-4 lt-lg:left-8 lg:left-12 xl:left-18 top-8",
-      headerLine: "center font-bold center textBig",
-      trailingLine: "center font-bold textSmall",
+      headerLine: "center font-bold center textBig ",
+      trailingLine: "center font-bold textSmall ",
       streamLink: "center font-bold textMinimal hideLink link:text-inherit visited:text-inherit",
       link: "center font-bold textfooter",
     }
