@@ -12,17 +12,27 @@ export class StreamTimer extends LitElement {
     @property({type: Boolean})
         special?: boolean
     
+        
     render() {
+        const timeObj = this.time.split(' ')
+        const timeArray = () => {
+            let pairs = []
+            for (let i = 0; i < timeObj.length; i += 2) {
+                pairs.push([timeObj[i], timeObj[i + 1]])
+            }
+            return pairs
+        }
+        const timeSplit = timeArray().map((unit, index) => {return html`<span key=${index} class="inline-block">${unit[0]} ${unit[1]}</span> `})
         const date = this.date?.toFormat("LLL dd', at' t ZZZZ")
         return html`
             <h2 class="dinBold trailingLine" id="a"> ${this.special? "Special stream in:": "Next stream is in:"}</h2>
             <div id="b">
-            <h1 class="dinBold headerLine mb-0 pb-0">${this.time}</h1>
+            <h1 class="dinBold headerLine mb-0 pb-0">${timeSplit}</h1>
             <h2 class="dinRegular trailingLine mt-0 pt-0">on ${date} (local time)</h2>
             </div>
             <h2  class="streamLink" id="c"><a href="https://www.twitch.tv/secretsleepoversociety">twitch.tv/secretsleepoversociety</a></h2>
         `
-    }
+        }
     static styles?: CSSResultGroup | undefined = css`
         a > * {
             color: inherit;
