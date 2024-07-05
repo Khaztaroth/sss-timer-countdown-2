@@ -37,7 +37,7 @@ export default defineConfig({
       textSmall: "lt-sm:text-5xl sm:text-5xl xl:text-8xl",
       textMinimal: "lt-sm:text-3xl sm:text-3xl xl:text-5xl ",
       textfooter: "lt-sm:text-lg sm:text-lg xl:text-xl",
-      bgShadow: "before:content-[''] before:absolute before:size-full before:top-0 before:left-0 before:opacity-95",
+      bgShadow: "before:content-[''] before:absolute before:w-full before:h-[99.95%] before:top-0 before:left-0 before:opacity-95",
       bgBlock: "absolute size-11/12 lt-sm:left-4 lt-lg:left-8 lg:left-12 xl:left-18 top-8",
       headerLine: "center font-bold center textBig ",
       trailingLine: "center font-bold textSmall ",
