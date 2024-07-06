@@ -92,7 +92,7 @@ export class TimerViewer extends LitElement {
         this._updateTimeTask = new Task (this, {
             task: async() => {
             this.streamTimer = getCurrentTime(this.days)
-            this.stream.time = useFormatter(this.streamTimer.time)
+            this.stream.time = useFormatter(this.streamTimer.time.plus({minutes: 1}))
             this.stream.date = this.streamTimer.date
             this.stream.isSpecial = this.streamTimer.isSpecial
             this.stream.isVacation = this.streamTimer.isVacation

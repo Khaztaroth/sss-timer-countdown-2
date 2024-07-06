@@ -1,16 +1,17 @@
 import { Duration } from "luxon";
 
 export function useFormatter(timeDiff: Duration) {
-    if (timeDiff.days >= 1) {
+    timeDiff = timeDiff.normalize()
+    if (timeDiff.days > 0) {
         return (
             timeDiff.toFormat(
-                `d '${timeDiff.days < 2 ? 'day' : 'days'}' ${timeDiff.hours >= 1 ? `h '${timeDiff.hours < 2 ? 'hour' : 'hours'}'` : ''} ${timeDiff.minutes >= 1 ? `m '${timeDiff.minutes < 2 ? 'minute' : 'minutes'}'` : ''}`
+                `d '${timeDiff.days < 2 ? 'day' : 'days'}' ${timeDiff.hours > 0 ? `h '${timeDiff.hours < 2 ? 'hour' : 'hours'}'` : ''} ${timeDiff.minutes > 0 ? `m '${timeDiff.minutes < 2 ? 'minute' : 'minutes'}'` : ''}`
             )
         )
     } else if (timeDiff.hours > 0) {
         return (
             timeDiff.toFormat(
-                `h '${timeDiff.hours < 2 ? 'hour' : 'hours'}' ${timeDiff.minutes >= 1 ? `m '${timeDiff.minutes < 2 ? 'minute' : 'minutes'}'` : ''}`
+                `h '${timeDiff.hours < 2 ? 'hour' : 'hours'}' ${timeDiff.minutes > 0 ? `m '${timeDiff.minutes < 2 ? 'minute' : 'minutes'}'` : ''}`
             )
         )
     } else if (timeDiff.minutes > 0) {

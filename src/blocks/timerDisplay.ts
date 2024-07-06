@@ -23,7 +23,7 @@ export class StreamTimer extends LitElement {
             return pairs
         }
         const timeSplit = timeArray().map((unit, index) => {return html`<span key=${index} class="inline-block">${unit[0]} ${unit[1]}</span> `})
-        const date = this.date?.toFormat("LLL dd', at' t ZZZZ")
+        const date = this.date?.toLocal().toFormat("LLL dd', at' t ZZZZ")
         return html`
             <h2 class="dinBold trailingLine" id="a"> ${this.special? "Special stream in:": "Next stream is in:"}</h2>
             <div id="b">

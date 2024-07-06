@@ -33,13 +33,13 @@ export function getCurrentTime(days: Days): StreamTimer  {
     }
 
     if (days.wed && timeUntil('wed').days >=0 && timeUntil('wed').hours >= -1) {
-       return timeUntilWed(timeUntil('wed'), upcomingStreamDate('wed'))
+       return TimerData(timeUntil('wed'), upcomingStreamDate('wed'))
     }
     if (days.sun && timeUntil('sun').days >=0 && timeUntil('sun').hours >= -1) {
-        return timeUntilSun(timeUntil('sun'), upcomingStreamDate('sun'))
+        return TimerData(timeUntil('sun'), upcomingStreamDate('sun'))
      }
     if (days.nextWed && timeUntil('nextWed').days >=0 && timeUntil('nextWed').hours >= -1) {
-        return timeUntilNextWed(timeUntil('nextWed'), upcomingStreamDate('nextWed'))
+        return TimerData(timeUntil('nextWed'), upcomingStreamDate('nextWed'))
      }
     if (!days.wed && !days.sun && !days.nextWed) {
          return {
@@ -64,29 +64,7 @@ export function getCurrentTime(days: Days): StreamTimer  {
         date: DateTime.fromISO('2077-12-30T12:00:00.000')
     }    
 
-function timeUntilWed(time: Duration, date: DateTime): StreamTimer {
-    const timer = {
-        isSpecial: false,
-        isVacation: false,
-        time: time,
-        date: date
-    }
-
-    return timer
-}
-
-function timeUntilSun(time: Duration, date: DateTime) {
-    const timer = {
-        isSpecial: false,
-        isVacation: false,
-        time: time,
-        date: date
-    }
-
-    return timer
-}
-
-function timeUntilNextWed(time: Duration, date: DateTime) {
+function TimerData(time: Duration, date: DateTime): StreamTimer {
     const timer = {
         isSpecial: false,
         isVacation: false,
