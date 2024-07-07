@@ -31,6 +31,12 @@ function loadingMessage(): string {
         "T posing...",
         'Waiting for Clara to get off the phone...',
         'Summoning braincells...',
+        'Bebebebebe...',
+        'Whoayu?',
+        'Placing 2 chairs...',
+        'Thanking the mods...',
+        'Getting our dream guest...',
+        "C'est qui toi?",
     ];
 
     var Number = Math.floor(Math.random()*messages.length);
@@ -55,14 +61,14 @@ export class TimerViewer extends LitElement {
         special: '',
         vacation: '',
     }
-
+    loadingMessage: string =  ''
     connectedCallback(): void {
         super.connectedCallback();
         const getDays = async () => {this.days = await parseDays()}
         getDays();
         this._fetchStreamInfo.run();
         this.updateInterval = window.setInterval(() => this._updateTimeTask.run(), 1000)
-
+        this.loadingMessage = loadingMessage()
         window.setTimeout(() => {
             this.isLoading = false
         }, 1000)
@@ -125,7 +131,7 @@ export class TimerViewer extends LitElement {
         if (this.isLoading) {
             return html `
                 <div id="bg_img" class=${this.classes.bg_img}>
-                        <h1 class="dinBold headerLine">${loadingMessage()}</h1>
+                        <h1 class="dinBold headerLine">${this.loadingMessage}</h1>
                 </div>
                 <footer-links class=${this.classes.footer}></footer-links>
             `
