@@ -32,6 +32,14 @@ export function getCurrentTime(days: Days): StreamTimer  {
         return upcomingStreamDate(day).diff(nowInNY, ['days', 'hours', 'minutes', 'seconds'])
     }
 
+    if (TimeUntilSpecial.days >= 0 && TimeUntilSpecial.hours >= -1) {
+        return {
+            isSpecial: true,
+            isVacation: false,
+            time: TimeUntilSpecial, 
+            date: DateSpecial,
+        }
+    }
     if (days.wed && timeUntil('wed').days >=0 && timeUntil('wed').hours >= -1) {
        return TimerData(timeUntil('wed'), upcomingStreamDate('wed'))
     }
@@ -48,14 +56,6 @@ export function getCurrentTime(days: Days): StreamTimer  {
              time: TimeUntilVacation,
              date: DateVacation,
          }
-    }
-    if (TimeUntilSpecial.days >= 0 && TimeUntilSpecial.hours >= -1) {
-        return {
-            isSpecial: true,
-            isVacation: false,
-            time: TimeUntilSpecial, 
-            date: DateSpecial,
-        }
     }
     return {
         isSpecial: false, 
