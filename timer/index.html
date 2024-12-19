@@ -1,0 +1,14 @@
+<head>
+    <script type="module">
+        import { timerInfo } from './index.ts'
+        const timer = document.createTextNode(`Stream starting in: ${timerInfo()}`)
+        const div = document.createElement('div')
+        div.appendChild(timer)
+
+        const existingDiv = document.getElementById('placeholder')
+        document.body.insertBefore(div, existingDiv)
+    </script>
+</head>
+<body>
+    <div id="placeholder"></div>
+</body>
