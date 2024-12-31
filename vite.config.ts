@@ -8,12 +8,12 @@ import presetWind from '@unocss/preset-wind'
 
 export default defineConfig({
   build: {
-    rollupOptions: {
-      input: {
-        main: resolve(__dirname, 'index.html'),
-        timer: resolve(__dirname, 'timer/index.html'),
-      }
-    }
+    // rollupOptions: {
+    //   input: {
+    //     main: resolve(__dirname, 'index.html'),
+    //     timer: resolve(__dirname, 'timer/index.html'),
+    //   }
+    // }
   },
   plugins: [
     UnoCSS({
