@@ -8,7 +8,7 @@ export function getCurrentTime(days: Days): StreamTimer  {
     const startOfWeek = nowInNY.startOf('week')
 
 
-    const DateSpecial = DateTime.fromISO(days.special)
+    const DateSpecial = DateTime.fromISO(days.special, inNY)
     const TimeUntilSpecial = DateSpecial.diff(nowInNY, ['days', 'hours', 'minutes', 'seconds'])
     
     const DateVacation = DateTime.fromISO(`${days.vacation}T21:00:00.000-04:00`)
@@ -25,7 +25,7 @@ export function getCurrentTime(days: Days): StreamTimer  {
     }
 
     const upcomingStreamDate = (day: StreamDays): DateTime => {
-        return DateTime.fromFormat(`${upcomingDate(day).month}/${upcomingDate(day).day}/${upcomingDate(day).year}, 9:00 PM`, 'f', inNY)
+        return DateTime.fromFormat(`${upcomingDate(day).month}/${upcomingDate(day).day}/${upcomingDate(day).year}, 8:00 PM`, 'f', inNY)
     }
 
     const timeUntil = (day: StreamDays): Duration => {
