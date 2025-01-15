@@ -21,11 +21,11 @@ export type Stream = {
 }
 
 export type Days  = {
-    wed: boolean,
-    sun: boolean,
-    nextWed: boolean,
-    special: string,
-    vacation: string,
+        wed: boolean,
+        sun: boolean,
+        nextWed: boolean,
+        special: string,
+        vacation: string,
 }
 
 export type StreamDays = 'wed' | 'sun' | 'nextWed'
