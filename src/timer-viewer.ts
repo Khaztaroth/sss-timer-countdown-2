@@ -14,8 +14,9 @@ import './blocks/footer'
 
 async function parseDays(): Promise<Days> {
     const days = await useActiveDays()
+    console.log(days)
     const daysJson: Days = JSON.parse(days)
-
+    console.log(daysJson)
     return daysJson
 };
 
