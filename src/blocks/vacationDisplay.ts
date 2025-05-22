@@ -17,9 +17,11 @@ export class VacationTimer extends LitElement {
     render() {
         const date = this.date?.toFormat('EEEE, LLLL dd')
         return html`
+                    <div display="flex" flex-col gap-2 class="text-center">
                     <h1 class="dinBold headerLine"> Currently <span id='striken'>GONE</span></h1>
                     <h2 class="dinRegular trailingLine">We are hoping to be back <br> on ${date} at our usual time</h2>
                     <h2 class="streamLink" href="https://www.twitch.tv/secretsleepoversociety">twitch.tv/secretsleepoversociety</h2>
+                    </div>      
                 `
     }
 
